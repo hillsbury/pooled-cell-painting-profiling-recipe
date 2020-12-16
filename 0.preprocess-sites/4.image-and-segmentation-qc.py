@@ -78,6 +78,8 @@ loc_df = (
     .assign(site_location=sites_list)
 )
 
+loc_df["site_location"] = "Site_" + loc_df["site_location"].astype(str) ##specific to CP074 well,plate colnames
+
 # Create total_cell_count
 cell_count_bysite_df = (
     cell_count_df.groupby("site")["cell_count"]
@@ -200,7 +202,7 @@ image_df = pd.read_csv(input_image_file, sep="\t")
 image_meta_col_list = list(image_cols.values())
 
 # Add in x, y coordinates for plotting
-image_df[image_cols["site"]] = image_df[image_cols["site"]].astype(int)
+# image_df[image_cols["site"]] = image_df[image_cols["site"]].astype(int) ##specific to CP074 well,plate colnames
 image_df = image_df.merge(
     loc_df, how="left", left_on=image_cols["site"], right_on="site_location"
 )
